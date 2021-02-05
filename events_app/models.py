@@ -2,7 +2,7 @@
 from events_app import db
 from sqlalchemy.orm import backref
 
-# TODO: Create a model called `Guest` with the following fields:
+#  Create a model called `Guest` with the following fields:
 # - id: primary key
 # - name: String column
 # - email: String column
@@ -11,8 +11,18 @@ from sqlalchemy.orm import backref
 
 class Guest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False, unique=True)
+    email = db.Column(db.String(80), nullable=False, unique=True)
+    phone = db.Column(db.String(10), nullable=False, unique=True)
+    events_attending = db.relationship('Event', secondary= "event_list", back_populates="guests")
 
-# TODO: Create a model called `Event` with the following fields:
+    def __str__(self):
+        return f'<Genre: {self.name}>'
+
+    def __repr__(self):
+        return f'<Genre: {self.name}>'
+
+#  Create a model called `Event` with the following fields:
 # - id: primary key
 # - title: String column
 # - description: String column
@@ -24,9 +34,23 @@ class Guest(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80), nullable=False, unique=True)
+    description = db.Column(db.String(80), nullable=False, unique=True)
+    date_and_time = db.Column(db.DateTime)
+    guests = db.relationship('Guest', secondary = "event_list", back_populates= 'events_attending')
 
-# TODO: Create a table `guest_event_table` with the following columns:
+    def __str__(self):
+        return f'<Genre: {self.title}>'
+
+    def __repr__(self):
+        return f'<Genre: {self.title}>'
+
+
+#  Create a table `guest_event_table` with the following columns:
 # - book_id: Integer column (foreign key)
 # - genre_id: Integer column (foreign key)
 
-guest_event_table = None
+guest_event_table = db.Table('event_list',
+    db.Column("guest_id", db.Integer, db.ForeignKey('guest.id')),
+    db.Column("event_id", db.Integer, db.ForeignKey('event.id'))
+)

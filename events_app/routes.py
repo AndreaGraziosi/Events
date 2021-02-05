@@ -18,27 +18,60 @@ main = Blueprint('main', __name__)
 def index():
     """Show upcoming events to users!"""
     # TODO: Get all events and send to the template
-    return render_template('index.html')
+    event = Event(
+        title="title", 
+        description="description", 
+        date_and_time="Date and Time",
+        guests ="guests"
+        )
+
+    db.session.add(event)
+    db.session.commit()
+
+    return render_template('index.html', event=event)
 
 
 @main.route('/event/<event_id>', methods=['GET'])
 def event_detail(event_id):
     """Show a single event."""
     # TODO: Get the event with the given id and send to the template
-    return render_template('event_detail.html')
+    event_d = Event(
+        id = 'event_id',
+        title = 'title'
+    )
 
+    db.session.add(event_d)
+    db.session.commit()
+
+    return render_template('event_detail.html', event_d=event_d)
+
+   
 
 @main.route('/event/<event_id>', methods=['POST'])
 def rsvp(event_id):
     """RSVP to an event."""
-    # TODO: Get the event with the given id from the database
+    # Get the event with the given id from the database
+    event_d = Event(
+        id = 'event_id',
+        title = 'title'
+    )
+
+    db.session.add(event_d)
+    db.session.commit()
+
     is_returning_guest = request.form.get('returning')
     guest_name = request.form.get('guest_name')
 
     if is_returning_guest:
         # TODO: Look up the guest by name, and add the event to their 
         # events_attending, then commit to the database
-        pass
+        guest = Guest(
+            name = 'name',
+            events_attending= 'events_attending'
+    )
+        db.session.add(guest)
+        db.session.commit()
+        
     else:
         guest_email = request.form.get('email')
         guest_phone = request.form.get('phone')
