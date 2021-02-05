@@ -17,7 +17,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     """Show upcoming events to users!"""
-    # TODO: Get all events and send to the template
+    #  Get all events and send to the template
     event = Event(
         title="title", 
         description="description", 
@@ -34,7 +34,7 @@ def index():
 @main.route('/event/<event_id>', methods=['GET'])
 def event_detail(event_id):
     """Show a single event."""
-    # TODO: Get the event with the given id and send to the template
+    #  Get the event with the given id and send to the template
     event_d = Event(
         id = 'event_id',
         title = 'title'
@@ -63,7 +63,7 @@ def rsvp(event_id):
     guest_name = request.form.get('guest_name')
 
     if is_returning_guest:
-        # TODO: Look up the guest by name, and add the event to their 
+        #  Look up the guest by name, and add the event to their 
         # events_attending, then commit to the database
         guest_look_up = Guest.query.filter_by(name=is_returning_guest)
         guest = Guest(
@@ -76,7 +76,7 @@ def rsvp(event_id):
     else:
         guest_email = request.form.get('email')
         guest_phone = request.form.get('phone')
-        # TODO: Create a new guest with the given name, email, and phone, and 
+        #  Create a new guest with the given name, email, and phone, and 
         # add the event to their events_attending, then commit to the database
         new_guest = Guest(
             name="name",
@@ -107,7 +107,7 @@ def create():
         except ValueError:
             print('there was an error: incorrect datetime format')
 
-        # TODO: Create a new event with the given title, description, & 
+        #  Create a new event with the given title, description, & 
         # datetime, then add and commit to the database
         new_event = Event(
             title='title',
@@ -125,7 +125,7 @@ def create():
 
 @main.route('/guest/<guest_id>')
 def guest_detail(guest_id):
-    # TODO: Get the guest with the given id and send to the template
-        guest = Guest.query.filter_by(id=id)
-        
+     #  Get the guest with the given id and send to the template
+    guest = Guest.query.filter_by(id=id)
+
     return render_template('guest_detail.html')

@@ -53,15 +53,13 @@
     </fieldset>
 </form>
 
-<!-- TODO: Display the actual guests attending -->
+<!--  Display the actual guests attending -->
 
 <h2>Guests Attending:</h2>
 <ul>
-    
-    <li><a href="/guest/1">Meredith</a></li>
-    <li><a href="/guest/2">Dani</a></li>
-    <li><a href="/guest/3">Jordan</a></li>
-    <li><a href="/guest/4">Ducky</a></li>
+    {% for guest in guests: %}
+    <li><a href="/guest/1">{{guest.name}}</a></li>
+    {% enfor %}
 </ul>
 
 {% endblock %}
